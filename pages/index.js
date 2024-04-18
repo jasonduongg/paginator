@@ -1,7 +1,28 @@
+import React, { useState } from 'react';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
+  const [numItems, setNumItems] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const data = {
+    1: {date: "22.07.21", time: "16.02pm", file: "report 1"},
+    2: {date: "23.07.21", time: "12.02pm", file: "report 2"},
+    3: {date: "12.01.21", time: "24.00pm", file: "report 3"},
+    4: {date: "22.07.21", time: "06.02pm", file: "report 4"}
+  }
+  const numDataEntries = Object.keys(data).length;
+  const numPages = Math.ceil(numDataEntries / numItems);
+
+  const setPage = (page) => {
+    setCurrentPage(page);
+  }
+
+  const handleNumItemsChange = (event) => {
+    setNumItems(Number(event.target.value));
+    setCurrentPage(1); // Reset to page 1 after changing the number of items per page
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -10,122 +31,52 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <div className={styles.pg_container}>
 
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
+          <div className={styles.pg_nav}>
+            <div className={styles.header_container}>
+              <h3 className={styles.header}>Recently Generated Reports</h3>
+            </div>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+            <div className={styles.nav_buttons}>
+              <button className={styles.nav_button}>F</button>
+              <button className={styles.nav_button}>X</button>
+            </div>
+          </div>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+          <div className={styles.pg_header}>
+            <div className={styles.date_container}>
+              <p className={styles.date}>Date</p>
+            </div>
+            <div className={styles.report_container}>
+              <p className={styles.report}>Report Name</p>
+            </div>
+            <div className={styles.download_container}>
+              <p className={styles.download}>Download</p>
+            </div>
+          </div>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+          <div className={styles.pg_main}></div>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <div className={styles.pg_footer}>
+            {Array.from({ length: numPages }, (_, index) => (
+              <button
+                key={index + 1}
+                className={styles.page_button}
+                onClick={() => setPage(index + 1)}
+                disabled={currentPage === index + 1}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <select value={numItems} onChange={handleNumItemsChange} className={styles.dropdown}>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={15}>15</option>
+            </select>
+          </div>
         </div>
       </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family:
-            Menlo,
-            Monaco,
-            Lucida Console,
-            Liberation Mono,
-            DejaVu Sans Mono,
-            Bitstream Vera Sans Mono,
-            Courier New,
-            monospace;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family:
-            -apple-system,
-            BlinkMacSystemFont,
-            Segoe UI,
-            Roboto,
-            Oxygen,
-            Ubuntu,
-            Cantarell,
-            Fira Sans,
-            Droid Sans,
-            Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
     </div>
   );
 }
