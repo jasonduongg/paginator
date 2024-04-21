@@ -27,7 +27,15 @@ export default function Home() {
               <p className={styles.report}>{item.file}</p>
             </div>
             <div className={styles.download_container}>
-              <button className={styles.downloadButton}>Download</button>
+              <button className={`${styles.download_button} ${styles.reset_button}`}>
+                <Image
+                  className='download_icon'
+                  src="/icons/Download.png" 
+                  width={25}
+                  height={25}
+                  
+                />
+              </button>
             </div>
           </div>
         </div>
@@ -38,7 +46,6 @@ export default function Home() {
 
     return renderedData;
   };
-
 
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -75,6 +82,11 @@ export default function Home() {
   const numPages = Math.ceil(numDataEntries / numItems);
 
   const setPage = (page) => {
+    if (page <= 0) {
+      return 
+    } else if (page > numPages) {
+        return
+    }
     setCurrentPage(page);
   }
 
@@ -131,7 +143,7 @@ export default function Home() {
               <p className={styles.report}>Report Name</p>
             </div>
             <div className={styles.download_container}>
-              <p className={styles.download}>Download</p>
+              <p className={styles.download_header}>Download</p>
             </div>
           </div>
 
@@ -142,25 +154,30 @@ export default function Home() {
           </div>
 
           <div className={styles.pg_footer}>
-            <div className={styles.page_button_container}>
-              <button onClick={() => setPage(currentPage - 1)}> Prev </button>
-                {Array.from({ length: numPages }, (_, index) => (
-                  <button
-                    key={index + 1}
-                    className={styles.page_button}
-                    onClick={() => setPage(index + 1)}
-                    disabled={currentPage === index + 1}
-                  >
-                    {index + 1}
-                  </button>
-              ))} 
-              <button onClick={() => setPage(currentPage + 1)}> Next </button>
+            <div className={styles.pg_foot_buttons}>
+              <div className={styles.page_button_container}>
+                <button onClick={() => setPage(currentPage - 1)}> Prev </button>
+                  {Array.from({ length: numPages }, (_, index) => (
+                    <button
+                      key={index + 1}
+                      className={styles.page_button}
+                      onClick={() => setPage(index + 1)}
+                      disabled={currentPage === index + 1}
+                    >
+                      {index + 1}
+                    </button>
+                ))} 
+                <button onClick={() => setPage(currentPage + 1)}> Next </button>
+              </div>
+              <div className={styles.pg_number_container}>
+                <p className={styles.item_per_text}> Items per Page</p>
+                <select value={numItems} onChange={handleNumItemsChange} className={styles.dropdown}>
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                  <option value={15}>15</option>
+                </select>
+              </div>
             </div>
-            <select value={numItems} onChange={handleNumItemsChange} className={styles.dropdown}>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-            </select>
           </div>
         </div>
       </main>

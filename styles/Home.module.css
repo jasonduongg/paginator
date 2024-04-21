@@ -1,3 +1,24 @@
+@font-face {
+  font-family: 'pd';
+  src: url('/fonts/pdReg.ttf') format('truetype');
+}
+
+.container {
+  font-family: 'pd', sans-serif;
+}
+
+.reset_button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+}
+
 .body {
   height: 100vh;
   width: 100vw;
@@ -5,8 +26,9 @@
 }
 
 .pg_container {
+  display: flex;
+  flex-direction: column;
   height: min-content;
-  padding: 10px;
   width: 45vw;
   border: 1px solid black;
   border-radius: 30px;
@@ -82,8 +104,12 @@
 }
 .pg_header{
   display: flex;
-  height: 5%;
-  background-color: #F5F5F5;
+  height: 20%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #e4e4e4;
+  margin-bottom: 10px;
+  color: #737373;
 
 }
 .date_container, .report_container , .download_container {
@@ -92,6 +118,10 @@
   min-width: min-content;
   align-items: center;
   /* border: 1px black solid */
+}
+
+.download_container{
+  margin-right: 10px;
 }
 
 .page_button_container {
@@ -106,16 +136,25 @@
   margin-left: 10px;
 }
 
+.meta_container{
+  margin-left: 20px;
+}
+
 .report_container {
   width: 65%;
 }
 
 .download_container {
   width: 15%;
+  justify-content: center;
+}
+
+.download_header {
+  margin:0
 }
 
 
-.date, .time, .report, .download {
+.date, .time, .report {
   margin: 0;
   margin-left: 10px;
   margin-right: 10px;
@@ -126,17 +165,28 @@
   height: min-content;
 }
 
-.date_container {
-
-}
 
 .pg_footer {
   display: flex;
-  /* background-color: red; */
-  height: 15%;
-  align-self: end;
+  flex-direction: row;
+  justify-content: center;
+  height: 45%;
+  width: 100%;
+  justify-content: center;
 }
 
+.pg_foot_buttons {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.pg_number_container {
+  display: flex;
+  flex-direction: row;
+
+}
 .data_row {
   background-color: white;
   display: flex;
@@ -147,8 +197,12 @@
   padding-bottom: 5px
 }
 
+.item_per_text {
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
 .meta_container {
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
   justify-content: start;
